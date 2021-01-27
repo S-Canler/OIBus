@@ -27,6 +27,12 @@ class FolderScanner extends ProtocolHandler {
     this.compression = compression
 
     this.handlesFiles = true
+
+    this.statusData = {
+      lastScanTime : 0,
+      lastFileAddedTime : 0,
+      numberOfFilesAdded : 0, 
+    }
   }
 
   /**
@@ -71,6 +77,7 @@ class FolderScanner extends ProtocolHandler {
     } catch (error) {
       this.logger.error(`The input folder ${this.inputFolder} is not readable: ${error.message}`)
     }
+    this.statusData.lastScanTime = this.lastOnScanAt // A revoir ça !! 
   }
 
   /**
@@ -127,6 +134,8 @@ class FolderScanner extends ProtocolHandler {
     } else {
       await this.addFile(filePath, this.preserveFiles)
     }
+    this.statusData.lastFileAddedTime = new Date().getTime()
+    this.statusData.numberOfFilesAdded += 1
 
     if (this.preserveFiles) {
       const stats = fs.statSync(path.join(this.inputFolder, filename))

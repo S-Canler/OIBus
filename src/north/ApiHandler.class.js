@@ -1,3 +1,5 @@
+const EventEmitter = require('events')
+
 const EncryptionService = require('../services/EncryptionService.class')
 const Logger = require('../engine/Logger.class')
 
@@ -45,6 +47,8 @@ class ApiHandler {
     const { logParameters } = this.application
     this.logger = new Logger()
     this.logger.changeParameters(this.engineConfig.logParameters, logParameters)
+
+    this.sseData = {}
   }
 
   /**
@@ -55,6 +59,13 @@ class ApiHandler {
   connect() {
     const { applicationId, api } = this.application
     this.logger.info(`North API ${applicationId} started with protocol ${api}`)
+
+    if (!this.engine.eventEmitters[`/north/${applicationId}/sse`]) {
+      this.engine.eventEmitters[`/north/${applicationId}/sse`] = {}
+      this.engine.eventEmitters[`/north/${applicationId}/sse`].events = new EventEmitter()
+      this.engine.eventEmitters[`/north/${applicationId}/sse`].events.setMaxListeners(0)
+      this.engine.eventEmitters[`/north/${applicationId}/sse`].events.on('data', this.listener)
+    }
   }
 
   /**
@@ -65,6 +76,13 @@ class ApiHandler {
   disconnect() {
     const { applicationId } = this.application
     this.logger.info(`North API ${applicationId} disconnected`)
+    this.engine.eventEmitters[`/north/${applicationId}/sse`].events.off('data', this.listener)
+  }
+
+  listener = (data) => {
+    if (data) this.sseData = data
+    console.log(`/north/${this.application.dataSourceId}/sse data:`, this.sseData)
+    this.engine.eventEmitters[`/north/${this.application.applicationId}/sse`].stream?.write(`data: ${JSON.stringify(this.sseData)}\n\n`)
   }
 
   /**

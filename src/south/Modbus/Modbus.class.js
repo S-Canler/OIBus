@@ -47,6 +47,11 @@ class Modbus extends ProtocolHandler {
 
     this.retryInterval = retryInterval // retry interval before trying to connect again
     this.handlesPoints = true
+    
+    this.statusData = {
+      numberOfValues : 0,
+      lastScanTime : 0, 
+    }
   }
 
   /**
@@ -73,6 +78,7 @@ class Modbus extends ProtocolHandler {
         this.modbusFunction(funcName, { startAddress, rangeSize }, points)
       })
     })
+    this.statusData.lastScanTime = lastOnScanAt // A revoir ça !! 
   }
 
   /**
@@ -134,6 +140,7 @@ class Modbus extends ProtocolHandler {
               },
             ])
           })
+          this.statusData.numberOfValues +=  addPointsCount // A revoir ça !! 
         })
         .catch((error) => {
           this.logger.error(`Modbus onScan error: for ${startAddress} and ${rangeSize}, ${funcName} error : ${JSON.stringify(error)}`)

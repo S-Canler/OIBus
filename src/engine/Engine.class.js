@@ -92,6 +92,7 @@ class Engine {
     this.activeProtocols = {}
     this.activeApis = {}
     this.jobs = []
+    this.eventEmitters = {}
 
     this.memoryStats = {}
     this.addValuesMessages = 0

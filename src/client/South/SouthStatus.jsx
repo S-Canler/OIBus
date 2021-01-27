@@ -1,82 +1,32 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Label, Row, Breadcrumb, BreadcrumbItem, Container } from 'reactstrap'
-import { FaSync } from 'react-icons/fa'
-import Table from '../components/table/Table.jsx'
-import apis from '../services/apis'
+import { Label, List, Row, Breadcrumb, BreadcrumbItem, Container } from 'reactstrap'
 import { AlertContext } from '../context/AlertContext.jsx'
 
 const SouthStatus = () => {
-  const [status, setStatus] = React.useState({})
+  // const [messages, setMessages] = React.useState([])
+  const [connectorData, setConnectorData] = React.useState({
+    numberOfValues: 0,
+    connectedSince: 0,
+  })
   const { setAlert } = React.useContext(AlertContext)
   const { dataSourceId } = useParams() // the dataSourceId passed in the url
 
-  /**
-   * Acquire the status
-   * @returns {void}
-   */
-  const fetchStatus = () => {
-    apis
-      .getSouthStatus(dataSourceId)
-      .then((response) => {
-        setStatus(response)
-      })
-      .catch((error) => {
-        console.error(error)
-        setAlert({ text: error.message, type: 'danger' })
-      })
-  }
-
-  /**
-   * Fetch status after render
-   * @returns {void}
-   */
   React.useEffect(() => {
-    fetchStatus()
-  }, [])
-
-  /**
-   * Generate string value from on object.
-   * @param {Object[]} data - The object
-   * @return {string} - The string value
-   */
-  const generateStringValueFromObject = (data) => {
-    let stringValue = ''
-    Object.entries(data).forEach(([key, value]) => {
-      if (key !== 'name') {
-        stringValue += stringValue ? ` / ${key}: ${value}` : `${key}: ${value}`
-      }
-    })
-    return stringValue
-  }
-
-  /**
-   * Generate row entry for the status table.
-   * @param {string} key - The key
-   * @param {string} value - The value
-   * @return {[{name: *, value: *}, {name: string, value: *}]} - The table row
-   */
-  const generateRowEntry = (key, value) => [
-    {
-      name: key,
-      value: key,
-    },
-    {
-      name: 'value',
-      value,
-    },
-  ]
-
-  const tableRows = []
-  Object.keys(status).forEach((key) => {
-    if (Array.isArray(status[key])) {
-      status[key].forEach((entry) => {
-        tableRows.push(generateRowEntry(entry.name, generateStringValueFromObject(entry)))
-      })
-    } else {
-      tableRows.push(generateRowEntry(key, status[key]))
+    const source = new EventSource(`/south/${dataSourceId}/sse`)
+    source.onerror = (error) => {
+      setAlert({ text: error.message, type: 'danger' })
     }
-  })
+    source.onmessage = (event) => {
+      const myData = JSON.parse(event.data)
+      const myStatusData = {
+        numberOfValues: myData.numberOfValues,
+        connectedSince: myData.firstDateConnexion,
+      }
+      setConnectorData(myStatusData)
+    }
+    return (() => source.close())
+  }, [])
 
   return (
     <>
@@ -99,13 +49,20 @@ const SouthStatus = () => {
           <span>
             {`${dataSourceId} status`}
             &nbsp;
-            <FaSync className="oi-icon" onClick={fetchStatus} />
           </span>
         </Label>
       </Row>
-      <Row>
-        <Container>{tableRows && <Table headers={[]} rows={tableRows} />}</Container>
-      </Row>
+      <Container fluid>
+        <List>
+          {Object.entries(connectorData).map(([key, value]) => (
+            <li key={key}>
+              {key}
+              :
+              {value}
+            </li>
+          ))}
+        </List>
+      </Container>
     </>
   )
 }
