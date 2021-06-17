@@ -17,6 +17,7 @@ protocolList.MQTT = require('../south/MQTT/MQTT.class')
 protocolList.SQLDbToFile = require('../south/SQLDbToFile/SQLDbToFile.class')
 protocolList.FolderScanner = require('../south/FolderScanner/FolderScanner.class')
 protocolList.OPCHDA = require('../south/OPCHDA/OPCHDA.class')
+protocolList.RestApi = require('../south/RestApi/RestApi.class')
 
 // North classes
 const apiList = {}
