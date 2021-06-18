@@ -2,6 +2,9 @@ const fs = require('fs')
 const path = require('path')
 const csv = require('papaparse')
 const moment = require('moment-timezone')
+const fetch = require('node-fetch')
+const https = require('https')
+
 const ProtocolHandler = require('../ProtocolHandler.class')
 
 /**
@@ -47,7 +50,6 @@ class RestApi extends ProtocolHandler {
     }
 
     this.handlesPoints = true
-    this.handlesFile = true
   }
 
   async connect() {
@@ -75,7 +77,7 @@ class RestApi extends ProtocolHandler {
           result = []
       }
     } catch (error) {
-      this.logger.error(error)
+      this.logger.error(JSON.stringify(error))
     }
 
     this.logger.debug(`Found ${result.length} results`)
@@ -83,58 +85,112 @@ class RestApi extends ProtocolHandler {
     if (result.length > 0) {
       this.lastCompletedAt = this.setLastCompletedAt(result)
       await this.setConfig('lastCompletedAt', this.lastCompletedAt)
-      const csvContent = await this.generateCSV(result)
-      if (csvContent) {
-        const filename = this.filename.replace('@date', moment().format('YYYY_MM_DD_HH_mm_ss'))
-        const filePath = path.join(this.tmpFolder, filename)
-        try {
-          this.logger.debug(`Writing CSV file at ${filePath}`)
-          fs.writeFileSync(filePath, csvContent)
-
-          if (this.compression) {
-            // Compress and send the compressed file
-            const gzipPath = `${filePath}.gz`
-            await this.compress(filePath, gzipPath)
-
-            fs.unlink(filePath, (unlinkError) => {
-              if (unlinkError) {
-                this.logger.error(unlinkError)
-              } else {
-                this.logger.info(`File ${filePath} compressed and deleted`)
-              }
-            })
-
-            this.logger.debug(`Sending compressed ${gzipPath} to Engine.`)
-            this.addFile(gzipPath, this.preserveFiles)
-          } else {
-            this.logger.debug(`Sending ${filePath} to Engine.`)
-            this.addFile(filePath, this.preserveFiles)
-          }
-        } catch (error) {
-          this.logger.error(error)
-        }
-      }
+      // send the packet immediately to the engine
+      this.addValues(result)
     }
   }
 
   /**
-   * Get new entries from MSSQL database.
+   * Get new entries from Octopus.
    * @returns {void}
    */
   async getDataFromOctopus() {
     const data = { property: this.dataSource.points[0].pointId }
     this.logger.silly(`Requesting point ${JSON.stringify(data)}`)
+
     const headers = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     }
 
-    return this.engine.requestService.httpSend(`${this.host}:${this.port}/Thingworx/Things/${this.entity}/Services/ODAgetPropertyValues`,
-      'POST',
-      this.authentication,
-      null,
-      JSON.stringify(data),
-      headers)
+    switch (this.authentication.type) {
+      case 'Basic': {
+        const decryptedPassword = this.engine.encryptionService.decryptText(this.authentication.password)
+        const basic = Buffer.from(`${this.authentication.username}:${decryptedPassword}`).toString('base64')
+        headers.Authorization = `Basic ${basic}`
+        break
+      }
+      case 'API Key': {
+        headers[this.authentication.key] = this.engine.encryptionService.decryptText(this.authentication.secretKey)
+        break
+      }
+      case 'Bearer': {
+        headers.Authorization = `Bearer ${this.engine.encryptionService.decryptText(this.authentication.token)}`
+        break
+      }
+      default:
+        break
+    }
+
+    const agent = new https.Agent({ rejectUnauthorized: false })
+
+    const fetchOptions = {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+      agent,
+      timeout: this.connectionTimeout,
+    }
+
+    const requestUrl = `${this.host}:${this.port}/Thingworx/Things/${this.entity}/Services/ODAgetPropertyValues`
+
+    let results = null
+    try {
+      const response = await fetch(requestUrl, fetchOptions)
+      if (!response.ok) {
+        const responseError = {
+          responseError: true,
+          statusCode: response.status,
+          error: new Error(response.statusText),
+        }
+        return Promise.reject(responseError)
+      }
+      results = await response.json()
+    } catch (error) {
+      const connectError = {
+        responseError: false,
+        error,
+      }
+      return Promise.reject(connectError)
+    }
+
+    return results.array.map((point) => {
+      const resultPoint = {}
+      Object.entries(point).forEach(([key, value]) => {
+        if (key === 'timestamp') {
+          resultPoint.timestamp = value
+        } else {
+          resultPoint.pointId = key
+          resultPoint.data = { value }
+        }
+      })
+      return resultPoint
+    })
+  }
+
+  /**
+   * Function used to parse an entry and update the lastCompletedAt if needed
+   * @param {*} entryList - on sql result item
+   * @return {string} date - the updated date in iso string format
+   */
+  setLastCompletedAt(entryList) {
+    let newLastCompletedAt = this.lastCompletedAt
+    entryList.forEach((entry) => {
+      if (entry[this.timeColumn] instanceof Date && entry[this.timeColumn] > new Date(newLastCompletedAt)) {
+        newLastCompletedAt = entry[this.timeColumn].toISOString()
+      } else if (entry[this.timeColumn]) {
+        const entryDate = new Date(entry[this.timeColumn])
+        if (entryDate.toString() !== 'Invalid Date') {
+          // When of type string, We need to take back the js added timezone since it is not in the original string coming from the database
+          // When of type number, no need to take back the timezone offset because it represents the number of seconds from 01/01/1970
+          // eslint-disable-next-line max-len
+          const entryDateWithoutTimezoneOffset = typeof entry[this.timeColumn] === 'string' ? new Date(entryDate.getTime() - entryDate.getTimezoneOffset() * 60000) : entryDate
+          if (entryDateWithoutTimezoneOffset > new Date(newLastCompletedAt)) {
+            newLastCompletedAt = entryDateWithoutTimezoneOffset.toISOString()
+          }
+        }
+      }
+    })
   }
 
   /**
