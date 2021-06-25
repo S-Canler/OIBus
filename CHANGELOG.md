@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.2.3-fix-bump-before-release.0 (2021-06-25)
+
+
+### Bug Fixes
+
+* **release:** do not upload packages to release ([6b0197a](https://github.com/OptimistikSAS/OIBus/commit/6b0197aaca1e54dd30a81c80fd68fe00a5fac3cc))
+
 ### 1.2.2 (2021-06-24)
 
 ### [1.2.1](https://github.com/OptimistikSAS/OIBus/compare/v1.2.0...v1.2.1) (2021-06-02)
