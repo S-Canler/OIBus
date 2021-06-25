@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.2.3-fix-bump-before-release.1 (2021-06-25)
+
 ### 1.2.3-fix-bump-before-release.0 (2021-06-25)
 
 

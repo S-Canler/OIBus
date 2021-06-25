@@ -1,6 +1,6 @@
 {
   "name": "oibus",
-  "version": "1.2.3-fix-bump-before-release.0",
+  "version": "1.2.3-fix-bump-before-release.1",
   "main": "index.js",
   "author": "Optimistik SAS",
   "license": "EUPL",
