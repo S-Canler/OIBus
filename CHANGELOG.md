@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.2.3-fix-bump-before-release.2 (2021-06-25)
+
+
+### Bug Fixes
+
+* **release:** need personal access token to propagate event ([fea4123](https://github.com/OptimistikSAS/OIBus/commit/fea4123563793a2f8ef129cb40e2005f58bb6c0b))
+
 ### 1.2.3-fix-bump-before-release.1 (2021-06-25)
 
 ### 1.2.3-fix-bump-before-release.0 (2021-06-25)
