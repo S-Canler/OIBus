@@ -61,8 +61,10 @@ class MQTT extends ProtocolHandler {
     this.handlesPoints = true
 
     this.statusData = {
+      protocol: 'MQTT',
       numberOfValues: 0,
-      firstDateConnexion: 0,
+      lastAddPointsAt: 0,
+
     }
   }
 
@@ -103,9 +105,6 @@ class MQTT extends ProtocolHandler {
    */
   handleConnectEvent() {
     this.logger.info(`Connected to ${this.url}`)
-
-    this.statusData.firstDateConnexion = new Date().toISOString()
-    this.engine.eventEmitters[`/south/${this.dataSource.dataSourceId}/sse`].events.emit('data', this.statusData)
     this.dataSource.points.forEach((point) => {
       this.client.subscribe(point.topic, { qos: this.qos }, this.subscribeCallback.bind(this, point))
     })
@@ -165,14 +164,13 @@ class MQTT extends ProtocolHandler {
       if (this.dataArrayPath) { // if a path is set to get the data array from the message
         if (parsedMessage[this.dataArrayPath]) { // if the data array exists at this path
           const dataArray = parsedMessage[this.dataArrayPath].map((data) => this.formatValue(data, topic))
-          this.statusData.numberOfValues += dataArray.length
-          this.engine.eventEmitters[`/south/${this.dataSource.dataSourceId}/sse`].events.emit('data', this.statusData)
           this.addValues(dataArray) // send a formatted array of values
         } else {
           this.logger.error(`Could not find the dataArrayPath ${JSON.stringify(this.dataArrayPath)} in message ${JSON.stringify(parsedMessage)}`)
         }
       } else { // if the message contains only one value as a json
         this.statusData.numberOfValues += 1
+        this.statusData.lastAddPointsAt = new Date().toISOString()
         this.engine.eventEmitters[`/south/${this.dataSource.dataSourceId}/sse`].events.emit('data', this.statusData)
         this.addValues([this.formatValue(parsedMessage, topic)])
       }

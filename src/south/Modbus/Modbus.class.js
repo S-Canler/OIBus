@@ -49,8 +49,9 @@ class Modbus extends ProtocolHandler {
     this.handlesPoints = true
     
     this.statusData = {
+      protocol: 'Modbus',
       numberOfValues : 0,
-      lastScanTime : 0, 
+      lastOnScanAt : 0, 
     }
   }
 
@@ -77,8 +78,8 @@ class Modbus extends ProtocolHandler {
         const rangeSize = endAddress - startAddress // Size of the addresses group
         this.modbusFunction(funcName, { startAddress, rangeSize }, points)
       })
-    })
-    this.statusData.lastScanTime = lastOnScanAt // A revoir ça !! 
+    })  
+    this.statusData.lastOnScanAt = new Date().toISOString()
   }
 
   /**
@@ -139,8 +140,9 @@ class Modbus extends ProtocolHandler {
                 data: { value: JSON.stringify(parseFloat((data * point.multiplierCoefficient).toFixed(5))) },
               },
             ])
+            this.statusData.numberOfValues += 1
+            this.engine.eventEmitters[`/south/${this.dataSource.dataSourceId}/sse`].events.emit('data', this.statusData)
           })
-          this.statusData.numberOfValues +=  addPointsCount // A revoir ça !! 
         })
         .catch((error) => {
           this.logger.error(`Modbus onScan error: for ${startAddress} and ${rangeSize}, ${funcName} error : ${JSON.stringify(error)}`)
@@ -185,11 +187,15 @@ class Modbus extends ProtocolHandler {
     this.socket.connect(
       { host, port },
       () => {
+        this.statusData.connection = new Date().toISOString()
+        this.engine.eventEmitters[`/south/${this.dataSource.dataSourceId}/sse`].events.emit('data', this.statusData)
         this.connected = true
       },
     )
     this.socket.on('error', (error) => {
       this.logger.error(`Modbus connect error: ${JSON.stringify(error)}`)
+      this.statusData.connection = 'Not connected'
+      this.engine.eventEmitters[`/south/${this.dataSource.dataSourceId}/sse`].events.emit('data', this.statusData)
       this.disconnect()
       this.reconnectTimeout = setTimeout(this.connectorToModbusServer.bind(this), this.retryInterval)
     })

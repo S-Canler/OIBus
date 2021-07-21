@@ -1,15 +1,11 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Label, List, Row, Breadcrumb, BreadcrumbItem, Container } from 'reactstrap'
+import { Row, Breadcrumb, BreadcrumbItem, Container } from 'reactstrap'
 import { AlertContext } from '../context/AlertContext.jsx'
 import Table from '../components/table/Table.jsx'
 
 const SouthStatus = () => {
-  // const [messages, setMessages] = React.useState([])
-  const [connectorData, setConnectorData] = React.useState({
-    numberOfValues: 0,
-    connectedSince: 0,
-  })
+  const [connectorData, setConnectorData] = React.useState({})
   const { setAlert } = React.useContext(AlertContext)
   const { dataSourceId } = useParams() // the dataSourceId passed in the url
 
@@ -20,31 +16,33 @@ const SouthStatus = () => {
     }
     source.onmessage = (event) => {
       const myData = JSON.parse(event.data)
-      const myStatusData = {
-        numberOfValues: myData.numberOfValues,
-        connectedSince: myData.firstDateConnexion,
+      console.log('myData', myData)
+      const myUpdatedData = {}
+      switch (myData.protocol) {
+        case 'MQTT':
+          myUpdatedData.numberOfValues = myData.numberOfValues
+          myUpdatedData.lastValuesAddedTime = myData.lastAddPointsAt
+          break
+
+        case 'Modbus':
+          myUpdatedData['Number of values'] = myData.numberOfValues
+          myUpdatedData.lastScanTime = myData.lastOnScanAt
+          myUpdatedData.connectedSince = myData.connection
+          break
+
+        case 'FolderScanner':
+          myUpdatedData.numberOfFilesAdded = myData.numberOfValues
+          myUpdatedData.lastScanTime = myData.lastOnScanAt
+          myUpdatedData.lastfileAddedTime = myData.lastOnScanAt
+          break
+
+        default:
+          break
       }
-      setConnectorData(myStatusData)
+      setConnectorData(myUpdatedData)
     }
     return (() => source.close())
   }, [])
-
-  // start modification for data in table ,,,,,,,,,,,
-
-  /**
-   * Generate string value from on object.
-   * @param {Object[]} data - The object
-   * @return {string} - The string value
-   */
-  const generateStringValueFromObject = (data) => {
-    let stringValue = ''
-    Object.entries(data).forEach(([key, value]) => {
-      if (key !== 'name') {
-        stringValue += stringValue ? ` / ${key}: ${value}` : `${key}: ${value}`
-      }
-    })
-    return stringValue
-  }
 
   /**
    * Generate row entry for the status table.
@@ -59,21 +57,15 @@ const SouthStatus = () => {
     },
     {
       name: 'value',
-      value,
+      value: value || '',
     },
   ]
 
   const tableRows = []
   Object.keys(connectorData).forEach((key) => {
-    if (Array.isArray(connectorData[key])) {
-      connectorData[key].forEach((entry) => {
-        tableRows.push(generateRowEntry(entry.name, generateStringValueFromObject(entry)))
-      })
-    } else {
-      tableRows.push(generateRowEntry(key, connectorData[key]))
-    }
+    tableRows.push(generateRowEntry(key, connectorData[key]))
   })
-
+  console.log(tableRows)
   return (
     <>
       <Breadcrumb tag="h5">
@@ -87,30 +79,11 @@ const SouthStatus = () => {
           {dataSourceId}
         </BreadcrumbItem>
         <BreadcrumbItem active tag="span">
-          Live
+          Live-status
         </BreadcrumbItem>
       </Breadcrumb>
       <Row>
-        <Label>
-          <span>
-            {`${dataSourceId} status`}
-            &nbsp;
-          </span>
-        </Label>
-      </Row>
-      <Container fluid>
-        <List>
-          {Object.entries(connectorData).map(([key, value]) => (
-            <li key={key}>
-              {key}
-              :
-              {value}
-            </li>
-          ))}
-        </List>
-      </Container>
-      <Row>
-        <Container>{tableRows && <Table headers={[]} rows={tableRows} />}</Container>
+        <Container>{tableRows.length > 0 && <Table headers={[]} rows={tableRows} />}</Container>
       </Row>
     </>
   )

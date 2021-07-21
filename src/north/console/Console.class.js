@@ -30,7 +30,7 @@ class Console extends ApiHandler {
       process.stdout.write(`(${values.length})`)
     }
     if (this.viewer) {
-      this.engine.eventEmitters[`/north/${this.application.applicationId}/sse`].events.emit('data', values.length)
+     this.engine.eventEmitters[`/north/${this.application.applicationId}/sse`].events.emit('data', values.length)
     }
     return values.length
   }

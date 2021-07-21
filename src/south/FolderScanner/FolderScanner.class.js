@@ -29,9 +29,9 @@ class FolderScanner extends ProtocolHandler {
     this.handlesFiles = true
 
     this.statusData = {
-      lastScanTime : 0,
-      lastFileAddedTime : 0,
-      numberOfFilesAdded : 0, 
+      lastOnScanAt : 0,
+      lastAddFileAt: 0,
+      addFileCount : 0, 
     }
   }
 
@@ -70,6 +70,8 @@ class FolderScanner extends ProtocolHandler {
               this.logger.error(`Error sending the file ${file}: ${sendFileError.message}`)
             }
           }
+          this.statusData.lastOnScanAt = new Date().toISOString()
+          this.engine.eventEmitters[`/south/${this.dataSource.dataSourceId}/sse`].events.emit('data', this.statusData)
         }
       } else {
         this.logger.debug(`The folder ${this.inputFolder} is empty.`)
@@ -77,7 +79,6 @@ class FolderScanner extends ProtocolHandler {
     } catch (error) {
       this.logger.error(`The input folder ${this.inputFolder} is not readable: ${error.message}`)
     }
-    this.statusData.lastScanTime = this.lastOnScanAt // A revoir ça !! 
   }
 
   /**
@@ -134,8 +135,9 @@ class FolderScanner extends ProtocolHandler {
     } else {
       await this.addFile(filePath, this.preserveFiles)
     }
-    this.statusData.lastFileAddedTime = new Date().getTime()
-    this.statusData.numberOfFilesAdded += 1
+    this.statusData.lastAddFileAt = new Date().toISOString()
+    this.statusData.addFileCount += 1
+    this.engine.eventEmitters[`/south/${this.dataSource.dataSourceId}/sse`].events.emit('data', this.statusData)
 
     if (this.preserveFiles) {
       const stats = fs.statSync(path.join(this.inputFolder, filename))
