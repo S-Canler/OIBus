@@ -406,6 +406,8 @@ module.exports = {
         level: 'none',
         host: '',
         interval: 60,
+        username: '',
+        password: '',
       },
     }
     config.engine.logParameters = newLogParameters
