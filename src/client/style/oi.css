@@ -289,6 +289,16 @@ label {
   cursor: pointer;
 }
 
+.oi-test{
+  position: absolute;
+  left: 5px;
+  bottom:5px;
+}
+.oi-test-one{
+  position: absolute;
+  left: 40%;
+}
+
 .oi-form-input {
   font-size: 11px;
   padding: 0 6px;

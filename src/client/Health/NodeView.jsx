@@ -6,6 +6,10 @@ import ReactFlow from 'react-flow-renderer'
 import { ConfigContext } from '../context/configContext.jsx'
 import PointsButton from '../South/PointsButton.jsx'
 import Modal from '../components/Modal.jsx'
+import logo from './OIBus.png'
+import mqtt from './Mqtt.png'
+import ProtocolsImages from '../South/ProtocolsImages.jsx'
+import ApisImages from '../North/ApisImages.jsx'
 
 const colors = {
   border: {
@@ -29,7 +33,6 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
   const applications = activeConfig?.north?.applications
   const dataSources = activeConfig?.south?.dataSources
   const engine = activeConfig?.engine
-
   const northNodes = applications?.map((application, index) => (
     {
       id: application.applicationId, // unique id of node
@@ -52,6 +55,8 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
               </UncontrolledTooltip>
               <div>{`(${application.api})`}</div>
             </Link>
+            <img className="oi-test" src={mqtt} alt="logo" height="20px" />
+            <img className="oi-test" src={`${ApisImages[application.api]}`} alt="logo" height="20px" />
           </div>),
       },
       // position the node with an offset to center and then an offset for each node
@@ -93,6 +98,8 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
               <div>{`(${dataSource.protocol})`}</div>
             </Link>
             <PointsButton dataSource={dataSource} />
+            <img className="oi-test" src={logo} alt="logo" height="20px" />
+            <img className="oi-test" src={`${ProtocolsImages[dataSource.protocol]}`} alt="logo" height="20px" />
           </div>
         ),
       },
@@ -153,6 +160,7 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
                 </Button>
               )}
             </Modal>
+            <img className="oi-test-one" src={logo} alt="logo" height="20px" />
           </div>
         ),
       },
