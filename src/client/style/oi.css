@@ -289,12 +289,12 @@ label {
   cursor: pointer;
 }
 
-.oi-test{
+.oi-node-image{
   position: absolute;
   left: 5px;
   bottom:5px;
 }
-.oi-test-one{
+.oi-node-center-image{
   position: absolute;
   left: 40%;
 }

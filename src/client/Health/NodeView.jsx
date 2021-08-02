@@ -54,7 +54,7 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
               </UncontrolledTooltip>
               <div>{`(${application.api})`}</div>
             </Link>
-            <img className="oi-test" src={`${ApiSchemas[application.api].image}`} alt="logo" height="20px" />
+            <img className="oi-node-image" src={`${ApiSchemas[application.api].image}`} alt="logo" height="20px" />
           </div>),
       },
       // position the node with an offset to center and then an offset for each node
@@ -96,7 +96,7 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
               <div>{`(${dataSource.protocol})`}</div>
             </Link>
             <PointsButton dataSource={dataSource} />
-            <img className="oi-test" src={`${ProtocolSchemas[dataSource.protocol].image}`} alt="logo" height="20px" />
+            <img className="oi-node-image" src={`${ProtocolSchemas[dataSource.protocol].image}`} alt="logo" height="20px" />
           </div>
         ),
       },
@@ -157,7 +157,7 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
                 </Button>
               )}
             </Modal>
-            <img className="oi-test-one" src={logo} alt="logo" height="20px" />
+            <img className="oi-node-center-image" src={logo} alt="logo" height="20px" />
           </div>
         ),
       },

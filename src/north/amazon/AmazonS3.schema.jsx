@@ -1,6 +1,6 @@
 import React from 'react'
-import { notEmpty } from '../../services/validation.service'
 import AmazonS3 from './AmazonS3.png'
+import { notEmpty } from '../../services/validation.service'
 
 const schema = { name: 'CSV' }
 schema.form = {

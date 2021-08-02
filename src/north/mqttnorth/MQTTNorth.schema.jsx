@@ -1,4 +1,5 @@
 import React from 'react'
+import MQTTNorth from './MQTTNorth.png'
 import { notEmpty, hasLengthBetween } from '../../services/validation.service'
 
 const schema = { name: 'MQTTNorth' }
@@ -82,5 +83,6 @@ schema.form = {
     defaultValue: '%1$s',
   },
 }
+schema.image = MQTTNorth
 
 export default schema
