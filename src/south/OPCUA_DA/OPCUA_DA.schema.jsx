@@ -1,5 +1,5 @@
 import React from 'react'
-import OPCUA_DA from './OPCUA.png'
+import OPCUA_DA from './OPCUA_DA.png'
 import { notEmpty, minValue, optional } from '../../services/validation.service'
 
 const schema = { name: 'OPCUA_DA' }

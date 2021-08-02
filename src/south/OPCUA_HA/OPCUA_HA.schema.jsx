@@ -1,5 +1,5 @@
 import React from 'react'
-import OPCUA_HA from './OPCUA.png'
+import OPCUA_HA from './OPCUA_HA.png'
 import { notEmpty, minValue, optional } from '../../services/validation.service'
 import validation from '../../client/South/Form/South.validation'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import OPCHDA from './OPCUA.png'
+import OPCHDA from './OPCHDA.png'
 import { notEmpty, inRange, isPath, minValue, isHost } from '../../services/validation.service'
 import validation from '../../client/South/Form/South.validation'
 
