@@ -7,9 +7,8 @@ import { ConfigContext } from '../context/configContext.jsx'
 import PointsButton from '../South/PointsButton.jsx'
 import Modal from '../components/Modal.jsx'
 import logo from './OIBus.png'
-import mqtt from './Mqtt.png'
-import ProtocolsImages from '../South/ProtocolsImages.jsx'
-import ApisImages from '../North/ApisImages.jsx'
+import ApiSchemas from '../North/Apis.jsx'
+import ProtocolSchemas from '../South/Protocols.jsx'
 
 const colors = {
   border: {
@@ -55,8 +54,7 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
               </UncontrolledTooltip>
               <div>{`(${application.api})`}</div>
             </Link>
-            <img className="oi-test" src={mqtt} alt="logo" height="20px" />
-            <img className="oi-test" src={`${ApisImages[application.api]}`} alt="logo" height="20px" />
+            <img className="oi-test" src={`${ApiSchemas[application.api].image}`} alt="logo" height="20px" />
           </div>),
       },
       // position the node with an offset to center and then an offset for each node
@@ -98,8 +96,7 @@ const NodeView = ({ status, onRestart, onShutdown }) => {
               <div>{`(${dataSource.protocol})`}</div>
             </Link>
             <PointsButton dataSource={dataSource} />
-            <img className="oi-test" src={logo} alt="logo" height="20px" />
-            <img className="oi-test" src={`${ProtocolsImages[dataSource.protocol]}`} alt="logo" height="20px" />
+            <img className="oi-test" src={`${ProtocolSchemas[dataSource.protocol].image}`} alt="logo" height="20px" />
           </div>
         ),
       },

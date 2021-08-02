@@ -1,5 +1,6 @@
 import React from 'react'
 import { notEmpty } from '../../services/validation.service'
+import AmazonS3 from './AmazonS3.png'
 
 const schema = { name: 'CSV' }
 schema.form = {
@@ -30,5 +31,6 @@ schema.form = {
   },
   proxy: { type: 'OIbProxy' },
 }
+schema.image = AmazonS3
 
 export default schema
