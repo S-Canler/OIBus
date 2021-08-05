@@ -9,7 +9,7 @@ exports[`NewApplicationRow check NewApplicationRow 1`] = `
       class="row"
     >
       <div
-        class="col-md-5"
+        class="col-md-6"
       >
         <div
           class="form-group"
@@ -18,7 +18,7 @@ exports[`NewApplicationRow check NewApplicationRow 1`] = `
             class=""
             for="applicationId"
           >
-            New Application ID
+            Application ID
           </label>
           <input
             aria-invalid="false"
@@ -34,7 +34,7 @@ exports[`NewApplicationRow check NewApplicationRow 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-5"
       >
         <div
           class="form-group"
@@ -73,7 +73,7 @@ exports[`NewApplicationRow check NewApplicationRow 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-2"
       >
         <button
           class="oi-add-button btn btn-primary btn-sm"
@@ -96,7 +96,7 @@ exports[`NewApplicationRow check add press 1`] = `
       class="row"
     >
       <div
-        class="col-md-5"
+        class="col-md-6"
       >
         <div
           class="form-group"
@@ -105,7 +105,7 @@ exports[`NewApplicationRow check add press 1`] = `
             class=""
             for="applicationId"
           >
-            New Application ID
+            Application ID
           </label>
           <input
             aria-invalid="false"
@@ -121,7 +121,7 @@ exports[`NewApplicationRow check add press 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-5"
       >
         <div
           class="form-group"
@@ -160,7 +160,7 @@ exports[`NewApplicationRow check add press 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-2"
       >
         <button
           class="oi-add-button btn btn-primary btn-sm"
@@ -183,7 +183,7 @@ exports[`NewApplicationRow check add pressed with empty application name 1`] = `
       class="row"
     >
       <div
-        class="col-md-5"
+        class="col-md-6"
       >
         <div
           class="form-group"
@@ -192,7 +192,7 @@ exports[`NewApplicationRow check add pressed with empty application name 1`] = `
             class=""
             for="applicationId"
           >
-            New Application ID
+            Application ID
           </label>
           <input
             aria-invalid="false"
@@ -208,7 +208,7 @@ exports[`NewApplicationRow check add pressed with empty application name 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-5"
       >
         <div
           class="form-group"
@@ -247,7 +247,7 @@ exports[`NewApplicationRow check add pressed with empty application name 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-2"
       >
         <button
           class="oi-add-button btn btn-primary btn-sm"
@@ -270,7 +270,7 @@ exports[`NewApplicationRow check change api 1`] = `
       class="row"
     >
       <div
-        class="col-md-5"
+        class="col-md-6"
       >
         <div
           class="form-group"
@@ -279,7 +279,7 @@ exports[`NewApplicationRow check change api 1`] = `
             class=""
             for="applicationId"
           >
-            New Application ID
+            Application ID
           </label>
           <input
             aria-invalid="false"
@@ -295,7 +295,7 @@ exports[`NewApplicationRow check change api 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-5"
       >
         <div
           class="form-group"
@@ -334,7 +334,7 @@ exports[`NewApplicationRow check change api 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-2"
       >
         <button
           class="oi-add-button btn btn-primary btn-sm"
@@ -357,7 +357,7 @@ exports[`NewApplicationRow check change applicationId 1`] = `
       class="row"
     >
       <div
-        class="col-md-5"
+        class="col-md-6"
       >
         <div
           class="form-group"
@@ -366,7 +366,7 @@ exports[`NewApplicationRow check change applicationId 1`] = `
             class=""
             for="applicationId"
           >
-            New Application ID
+            Application ID
           </label>
           <input
             aria-invalid="false"
@@ -382,7 +382,7 @@ exports[`NewApplicationRow check change applicationId 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-5"
       >
         <div
           class="form-group"
@@ -421,7 +421,7 @@ exports[`NewApplicationRow check change applicationId 1`] = `
         </div>
       </div>
       <div
-        class="col-md-3"
+        class="col-md-2"
       >
         <button
           class="oi-add-button btn btn-primary btn-sm"

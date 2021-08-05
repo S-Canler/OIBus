@@ -815,7 +815,7 @@ exports[`North check North 1`] = `
         class="row"
       >
         <div
-          class="col-md-5"
+          class="col-md-6"
         >
           <div
             class="form-group"
@@ -824,7 +824,7 @@ exports[`North check North 1`] = `
               class=""
               for="applicationId"
             >
-              New Application ID
+              Application ID
             </label>
             <input
               aria-invalid="false"
@@ -840,7 +840,7 @@ exports[`North check North 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-5"
         >
           <div
             class="form-group"
@@ -879,7 +879,7 @@ exports[`North check North 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-2"
         >
           <button
             class="oi-add-button btn btn-primary btn-sm"
@@ -1709,7 +1709,7 @@ exports[`North check add pressed with "new_application" id 1`] = `
         class="row"
       >
         <div
-          class="col-md-5"
+          class="col-md-6"
         >
           <div
             class="form-group"
@@ -1718,7 +1718,7 @@ exports[`North check add pressed with "new_application" id 1`] = `
               class=""
               for="applicationId"
             >
-              New Application ID
+              Application ID
             </label>
             <input
               aria-invalid="false"
@@ -1734,7 +1734,7 @@ exports[`North check add pressed with "new_application" id 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-5"
         >
           <div
             class="form-group"
@@ -1773,7 +1773,7 @@ exports[`North check add pressed with "new_application" id 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-2"
         >
           <button
             class="oi-add-button btn btn-primary btn-sm"
@@ -2603,7 +2603,7 @@ exports[`North check delete first application 1`] = `
         class="row"
       >
         <div
-          class="col-md-5"
+          class="col-md-6"
         >
           <div
             class="form-group"
@@ -2612,7 +2612,7 @@ exports[`North check delete first application 1`] = `
               class=""
               for="applicationId"
             >
-              New Application ID
+              Application ID
             </label>
             <input
               aria-invalid="false"
@@ -2628,7 +2628,7 @@ exports[`North check delete first application 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-5"
         >
           <div
             class="form-group"
@@ -2667,7 +2667,7 @@ exports[`North check delete first application 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-2"
         >
           <button
             class="oi-add-button btn btn-primary btn-sm"
@@ -3497,7 +3497,7 @@ exports[`North check edit first application 1`] = `
         class="row"
       >
         <div
-          class="col-md-5"
+          class="col-md-6"
         >
           <div
             class="form-group"
@@ -3506,7 +3506,7 @@ exports[`North check edit first application 1`] = `
               class=""
               for="applicationId"
             >
-              New Application ID
+              Application ID
             </label>
             <input
               aria-invalid="false"
@@ -3522,7 +3522,7 @@ exports[`North check edit first application 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-5"
         >
           <div
             class="form-group"
@@ -3561,7 +3561,7 @@ exports[`North check edit first application 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-2"
         >
           <button
             class="oi-add-button btn btn-primary btn-sm"
@@ -4425,7 +4425,7 @@ exports[`North check press edit first application id 1`] = `
         class="row"
       >
         <div
-          class="col-md-5"
+          class="col-md-6"
         >
           <div
             class="form-group"
@@ -4434,7 +4434,7 @@ exports[`North check press edit first application id 1`] = `
               class=""
               for="applicationId"
             >
-              New Application ID
+              Application ID
             </label>
             <input
               aria-invalid="false"
@@ -4450,7 +4450,7 @@ exports[`North check press edit first application id 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-5"
         >
           <div
             class="form-group"
@@ -4489,7 +4489,7 @@ exports[`North check press edit first application id 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-2"
         >
           <button
             class="oi-add-button btn btn-primary btn-sm"
@@ -5319,7 +5319,7 @@ exports[`North check press edit first application id 2`] = `
         class="row"
       >
         <div
-          class="col-md-5"
+          class="col-md-6"
         >
           <div
             class="form-group"
@@ -5328,7 +5328,7 @@ exports[`North check press edit first application id 2`] = `
               class=""
               for="applicationId"
             >
-              New Application ID
+              Application ID
             </label>
             <input
               aria-invalid="false"
@@ -5344,7 +5344,7 @@ exports[`North check press edit first application id 2`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-5"
         >
           <div
             class="form-group"
@@ -5383,7 +5383,7 @@ exports[`North check press edit first application id 2`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-2"
         >
           <button
             class="oi-add-button btn btn-primary btn-sm"
@@ -6213,7 +6213,7 @@ exports[`North check sort pressed on applicationId 1`] = `
         class="row"
       >
         <div
-          class="col-md-5"
+          class="col-md-6"
         >
           <div
             class="form-group"
@@ -6222,7 +6222,7 @@ exports[`North check sort pressed on applicationId 1`] = `
               class=""
               for="applicationId"
             >
-              New Application ID
+              Application ID
             </label>
             <input
               aria-invalid="false"
@@ -6238,7 +6238,7 @@ exports[`North check sort pressed on applicationId 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-5"
         >
           <div
             class="form-group"
@@ -6277,7 +6277,7 @@ exports[`North check sort pressed on applicationId 1`] = `
           </div>
         </div>
         <div
-          class="col-md-3"
+          class="col-md-2"
         >
           <button
             class="oi-add-button btn btn-primary btn-sm"
