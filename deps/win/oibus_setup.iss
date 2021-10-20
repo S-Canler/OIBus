@@ -270,10 +270,16 @@ begin
   begin
     if FileExists(JsonFile) then
     begin
+<<<<<<< HEAD
       ConfExists := True;
       if MsgBox('An oibus.json file was found at ' + MyDataDir + '. Do you want to overwrite it?', mbInformation, MB_YESNO) = IDYES then
       begin
         if MsgBox('WARNING : Overwriting the current setup will delete all logins, passwords and data you saved so far.' + #13#10 + 'Are you sure you want to proceed?', mbInformation, MB_YESNO) = IDNO then
+=======
+      if MsgBox('An oibus.json file was found at ' + MyDataDir + '. Do you want to overwrite it ?', mbInformation, MB_YESNO) = IDYES then
+      begin
+        if MsgBox('WARNING : Overwriting the current setup will delete all logins, passwords and data you saved so far.' + #13#10 + 'Are you sure you want to proceed ?', mbInformation, MB_YESNO) = IDNO then
+>>>>>>> 92b711f6 (fix(win-installer) added supplemental warning box in case of overwrite + fixed minor error displaying wrong port in 'access OIBus'' link)
           OverwriteConfig := False;
       end
       else
@@ -374,6 +380,7 @@ procedure CurPageChanged(CurPageID: Integer);
 begin
   if CurPageID = wpFinished then
   begin
+<<<<<<< HEAD
     AccessLink.Visible := False;
     OIBusLink.Visible := False;
     OIBusLink.Caption := 'http://localhost:' + MyPortNum;
@@ -382,6 +389,11 @@ begin
       AccessLink.Visible := True;
       OIBusLink.Visible := True;
     end
+=======
+    AccessLink.Visible := True;
+    OIBusLink.Caption := 'http://localhost:' + MyPortNum;
+    OIBusLink.Visible := True;
+>>>>>>> 92b711f6 (fix(win-installer) added supplemental warning box in case of overwrite + fixed minor error displaying wrong port in 'access OIBus'' link)
   end;
 end;
 
