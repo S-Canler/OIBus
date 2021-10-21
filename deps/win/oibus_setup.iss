@@ -271,11 +271,15 @@ begin
     if FileExists(JsonFile) then
     begin
 <<<<<<< HEAD
+<<<<<<< HEAD
       ConfExists := True;
       if MsgBox('An oibus.json file was found at ' + MyDataDir + '. Do you want to overwrite it?', mbInformation, MB_YESNO) = IDYES then
       begin
         if MsgBox('WARNING : Overwriting the current setup will delete all logins, passwords and data you saved so far.' + #13#10 + 'Are you sure you want to proceed?', mbInformation, MB_YESNO) = IDNO then
 =======
+=======
+      ConfExists := True;
+>>>>>>> f6c24f23 (fix(win-installer) fixed error leading to overwrite when in fact attempting to preserve existing setup during upgrade (known issues : wrong dimensions on OIbus icon))
       if MsgBox('An oibus.json file was found at ' + MyDataDir + '. Do you want to overwrite it ?', mbInformation, MB_YESNO) = IDYES then
       begin
         if MsgBox('WARNING : Overwriting the current setup will delete all logins, passwords and data you saved so far.' + #13#10 + 'Are you sure you want to proceed ?', mbInformation, MB_YESNO) = IDNO then
@@ -381,6 +385,7 @@ begin
   if CurPageID = wpFinished then
   begin
 <<<<<<< HEAD
+<<<<<<< HEAD
     AccessLink.Visible := False;
     OIBusLink.Visible := False;
     OIBusLink.Caption := 'http://localhost:' + MyPortNum;
@@ -394,6 +399,16 @@ begin
     OIBusLink.Caption := 'http://localhost:' + MyPortNum;
     OIBusLink.Visible := True;
 >>>>>>> 92b711f6 (fix(win-installer) added supplemental warning box in case of overwrite + fixed minor error displaying wrong port in 'access OIBus'' link)
+=======
+    AccessLink.Visible := False;
+    OIBusLink.Visible := False;
+    OIBusLink.Caption := 'http://localhost:' + MyPortNum;
+    if not ConfExists or (ConfExists and OverwriteConfig) then
+    begin
+      AccessLink.Visible := True;
+      OIBusLink.Visible := True;
+    end
+>>>>>>> f6c24f23 (fix(win-installer) fixed error leading to overwrite when in fact attempting to preserve existing setup during upgrade (known issues : wrong dimensions on OIbus icon))
   end;
 end;
 
