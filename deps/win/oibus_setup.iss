@@ -2,6 +2,7 @@
 #define MyAppPublisher "OPTIMISTIK SAS"
 #define MyAppURL "https://optimistik.io/oibus/"
 #define MyDateTime GetDateTimeString('yyyy/mm/dd hh:nn:ss', '-', ':')
+#define MyAppVersion "2.0.0"
 
 [Setup]
 AppId={{A4DCC920-510F-4D9D-AD02-67AA402EC010}
@@ -237,10 +238,10 @@ begin;
             Result := False
           else
           begin
-            FileContent := 'echo Stopping OIBus service...' + #13#10
-              + 'nssm.exe stop OIBus >nul 2>&1' + #13#10
+            FileContent := 'echo Stopping OIBus service... ' + #13#10
+              + 'nssm.exe stop OIBus >nul 2>&1 &> /dev/null' + #13#10
               + '@echo Starting OIBus in the console...' + #13#10
-              + '"' + ExpandConstant('{app}') + '\oibus.exe" --config "' + ConfigFilePath + '"'
+              + '"' + ExpandConstant('{app}') + '\oibus.exe" --config "' + ConfigFilePath + '" &> /dev/null'
             if not SaveStringToFile(ExpandConstant('{app}') + '\go.bat', FileContent, False) then
               Result := False
             else

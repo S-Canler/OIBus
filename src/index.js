@@ -21,6 +21,7 @@ if (cluster.isMaster) {
   let restartCount = 0
   let startTime = (new Date()).getTime()
 
+  cluster.setupMaster({windowsHide: true })
   cluster.fork()
 
   cluster.on('exit', (sourceWorker, code, signal) => {
