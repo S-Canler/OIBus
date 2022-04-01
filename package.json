@@ -63,7 +63,7 @@
     "koa-respond": "2.1.0",
     "koa-send": "5.0.1",
     "micromatch": "4.0.4",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "moment-timezone": "0.5.34",
     "mongodb": "4.2.2",
     "mqtt": "4.2.8",
